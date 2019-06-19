@@ -1,34 +1,45 @@
 var alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+
 var wins = 0;
 var losses = 0;
-var guessNum = [10];
-var guessChoice = [];
-var guessesSoFar = document.getElementById("Guesses-so-far");
-var guessesLeft = document.getElementById("Guesses-left");
+var guessNum = 10;
+var userGuesses = [];
+var guessesSoFarElem = document.getElementById("guessesSoFar");
+var guessesLeftElem = document.getElementById("guessesLeft");
+var winsElem = document.getElementById("wins");
+var lossesElem = document.getElementById("losses");
 var computerChoice = alphabet[Math.floor(Math.random() * alphabet.length)];
-console.log(computerChoice)
+console.log(computerChoice);
 
 document.onkeypress = function (event) {
     var userGuess = event.key;
 
     if (userGuess === computerChoice) {
         wins++;
-        guessesNum = 9;
-        guessChoice = [];
-        winsText.textContent = 'Wins: ' + wins;
-
+        guessNum = 10;
+        userGuesses = [];
+        lossesElem.textContent = "Losses: " + losses;
+        guessesLeftElem.textContent = "Guesses Left: " + guessNum;
+        winsElem.textContent = 'Wins: ' + wins;
+        guessesSoFarElem.textContent = "Guesses So Far: -None-";
+        computerChoice = alphabet[Math.floor(Math.random() * alphabet.length)];
+        console.log(computerChoice);
     } else {
-        if (guessChoice.includes(userGuess)) { } else {
-            guessesNum--;
-            guessChoice.push(userGuess);
-            guessesLeft.textContent = "Guesses Left: " + guessesNum;
-            guessesSoFar.textContent = "Guesses So Far: " + guessChoice;
+        if (!userGuesses.includes(userGuess)) {
+            guessNum--;
+            userGuesses.push(userGuess);
+            guessesLeftElem.textContent = "Guesses Left: " + guessNum;
+            guessesSoFarElem.textContent = "Guesses So Far: " + userGuesses;
         }
     }
-    if (guessesNum == 0) {
-        guessesNum++;
+    if (guessNum == 0) {
         losses++;
-        guessChoice = [];
-        losses.textContent = "Losses: " + losses;
+        guessNum = 10;
+        userGuesses = [];
+        lossesElem.textContent = "Losses: " + losses;
+        guessesLeftElem.textContent = "Guesses Left: " + guessNum;
+        winsElem.textContent = 'Wins: ' + wins;
+        guessesSoFarElem.textContent = "Guesses So Far: -None-";
+        computerChoice = alphabet[Math.floor(Math.random() * alphabet.length)];
     }
 }
